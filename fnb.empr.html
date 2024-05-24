@@ -1,0 +1,116 @@
+
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Internet Banking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
+	<link rel="Shortcut Icon" href="/img/favicon.ico" /> 
+	<link href="/inc/css/awesomplete.css" rel="stylesheet"/>
+    <script type="text/javascript" src="/inc/js/06/jquery.js"></script>
+    <script type="text/javascript" src="/inc/js/spin.min.js"></script>
+    <script type="text/javascript" src="/inc/js/Busy_Sign.js"></script>
+    <script type="text/javascript" src="/inc/js/functions.js"></script>   
+	<script src="/inc/js/awesomplete.js" async></script>  
+	
+    <script type="text/javaScript" language="JavaScript">
+
+	    var currentLocation;
+        function cleanExit()
+        {
+            var iframe = document.getElementById('mainFrame');
+            var url = 'cleanExit.htm?' + currentLocation;
+    
+            if(popUpsBlocked)
+            {
+                ajaxLogout();
+            }
+            else
+            {    
+                window.open(url, 'InternetBanking', 'width=1,height=1,left=0,top=0,scrollbars=no');
+            }
+        }
+
+    var popUpsBlocked = false;
+	 var win = window.open('','','width=1,height=1,left=0,top=0,scrollbars=no');
+
+    function checkPopupBlocked(poppedWindow) {
+     setTimeout(function(){doCheckPopupBlocked(poppedWindow);}, 5000);
+    }
+
+    function doCheckPopupBlocked(poppedWindow) {
+
+        var result = false;
+
+        try {
+            if (typeof poppedWindow == 'undefined') {
+                result = true;
+            }
+            else if (poppedWindow && poppedWindow.closed) {
+                result = false;
+            }
+            else if (poppedWindow && poppedWindow.outerWidth == 0) {
+                result = true;
+            }
+            else if (poppedWindow) {
+                result = false;
+            }
+            else {
+                result = true;
+            }
+
+        } catch (err) {
+        }
+
+        if(result)
+        {
+         popUpsBlocked = true;
+         document.getElementById('popupWarning').style.display = '';
+        }
+    
+        win.close();
+    }
+   
+    checkPopupBlocked(win);
+</script>
+</head>
+
+<!-- Foi alterado o método de unload para que este seja efectuado no onbeforeunload ao invés do unload. -->
+<!-- pois segundo algumas especificacoes, existem mais garantias que este metodo se execute do que o unload -->
+<body style="margin:0px; padding:0px;" onbeforeunload="javascript:cleanExit();" scroll="no">
+
+ <div id="popupWarning" style="display:none; width:100%; padding:4px 0px 4px 0px; text-align:center; font-size:small; font-family:Verdana; color:White; background-color:#464646">
+    O seu "browser" está a bloquear janelas "pop-up". Recomenda-se que active esta funcionalidade ao usar este site.
+    </div>
+    <iframe id="mainFrame" src="Login/login_detail.aspx" frameborder="0" style="margin:0px; padding:0px" title="Site Homebanking">
+        <p>O seu "browser" não suporta iframes.
+        <a href="/Login/login_detail.aspx">Clique aqui para continuar.</a></p>
+    </iframe>
+
+
+<style type="text/css">
+        body, html
+        {
+            margin: 0; padding: 0; height: 100%; /*overflow: hidden*/;
+        }
+        #mainFrame {
+            position:relative; left: 0; right: 0; /*bottom: 0;*/ top: 0px; width:100%; height:99%
+        }
+        @media only screen and (max-width: 450px)
+        {
+            #popupWarning
+            {
+                display:none;
+                height:0px!important;
+                visibility:collapse
+            }
+        }
+
+</style>
+
+<script>
+  
+</script>
+
+</body>
+</html>
